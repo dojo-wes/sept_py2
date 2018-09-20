@@ -1,0 +1,16 @@
+{% extends './layout.html' %}
+{% block body %}
+  <h1>Users Show</h1>
+  <h2>User's Info</h2>
+  <ul>
+    <li>{{ user.name }}</li>
+    <li>{{ user.username }}</li>
+    <li>{{ user.email }}</li>
+  </ul>
+  <h2>Products</h2>
+  <ul>
+    {% for product in user.products.all %}
+      <li>{{ product.name }}</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

@@ -9,5 +9,5 @@ urlpatterns = [
   url(r'^(?P<user_id>\d+)/edit/$', views.edit, name="edit"),
   url(r'^(?P<user_id>\d+)/update/$', views.update, name="update"),
   url(r'^(?P<user_id>\d+)/delete/$', views.delete, name="delete"),
-  url(r'^login$/', views.login, name="login"),
+  url(r'^login/$', views.login, name="login"),
 ]

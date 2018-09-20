@@ -1,0 +1,32 @@
+{% extends './layout.html' %}
+{% block body %}
+  <h1>Users Index</h1>
+  {% if users %}
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for user in users %}
+          <tr>
+            <td><a href="/users/{{ user.id }}/show">{{ user.name }}</a></td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            <td>
+              <a href="/users/{{ user.id }}/edit" class="button">Edit</a>
+              <form action="/users/{{ user.id }}/delete/" method="post">
+                {% csrf_token %}
+                <input type="submit" value="Delete User">
+              </form>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+{% endblock %}

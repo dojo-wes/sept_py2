@@ -1,0 +1,19 @@
+{% extends './layout.html' %}
+{% block body %}
+  <h1>Users Edit</h1>
+  {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+  <form action="/users/{{ user.id }}/update/" method="post">
+    {% csrf_token %}
+    <label for="name">Name:</label>
+    <input type="text" name="name" value="{{ user.name }}">
+    <label for="name">Username:</label>
+    <input type="text" name="username" value="{{ user.username }}">
+    <input type="submit" value="Edit User">
+  </form>
+{% endblock %}

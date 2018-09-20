@@ -25,7 +25,6 @@ class UserManager(models.Manager):
     if len(username_list) > 0:
       errors.append('Username already in use')
 
-
     try:
       user = self.get(email=form['email'])
       errors.append("Email already in use")
@@ -37,6 +36,49 @@ class UserManager(models.Manager):
         pw_hash = bcrypt.hashpw(form['password'].encode(), bcrypt.gensalt())
         user = self.create(name=form['name'], username=form['username'], email=form['email'], pw_hash=pw_hash)
         return (True, user)
+  
+  def validate_and_login(self, form):
+    errors = []
+
+    try:
+      user = self.get(email = form['email'])
+      if bcrypt.checkpw(form['password'].encode(), user.pw_hash.encode()):
+        return (True, user)
+      else:
+        errors.append('Incorrect username or password')
+        return (False, errors)
+    except:
+      errors.append('Incorrect username or password')
+      return (False, errors)
+
+  def delete_user(self, u_id):
+    try:
+      user = self.get(id = u_id)
+      user.delete()
+      return True
+    except:
+      return False
+
+  def validate_and_update_user(self, form, u_id):
+    errors = []
+
+    if len(form['name']) < 3:
+      errors.append('Name must be at least 3 characters')
+    if len(form['username']) < 3:
+      errors.append('Username must be at least 3 characters')
+
+    if len(errors) > 0:
+      return (False, errors)
+
+    try:
+      user = self.get(id=u_id)
+      user.name = form['name']
+      user.username = form['username']
+      user.save()
+      return (True, user)
+    except:
+      errors.append("User doesn't exist")
+      return (False, errors)
 
 class User(models.Model):
   name = models.CharField(max_length=255)
