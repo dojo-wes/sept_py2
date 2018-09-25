@@ -13,7 +13,7 @@ def new(req):
 
 def create(req):
   if req.method != 'POST':
-    return redirect('/users/new')
+    return redirect('users:new')
 
   valid, response = User.objects.validate_and_create_user(req.POST)
   if valid:
@@ -21,7 +21,7 @@ def create(req):
   else:
     for error in response:
       messages.error(req, error)
-  return redirect('/users/new')
+  return redirect('users:new')
 
 def show(req, user_id):
   try:

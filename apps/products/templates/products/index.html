@@ -1,0 +1,16 @@
+{% extends './layout.html' %}
+{% block body %}
+  <h1>Products</h1>
+  <h2>Your Cart:</h2>
+  <ul>
+    {% for product in cart_products %}
+      <li>{{ product.name }} - ${{ product.price }}, <a href="#" class="button">Remove From Cart</a></li>
+    {% endfor %}
+  </ul>
+  <h2>Available Products:</h2>
+  <ul>
+    {% for product in available_products %}
+      <li>{{ product.name }} - ${{ product.price }}, <a href="{% url 'products:add_to_cart' product.id %}" class="button">Add to Cart</a></li>
+    {% endfor %}
+  </ul>
+{% endblock %}
