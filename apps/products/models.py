@@ -35,6 +35,15 @@ class ProductManager(models.Manager):
     except:
       print 'SOMETHING WENT TERRIBLY WRONG'
 
+  def remove_from_cart(self, product_id, user_id):
+    try:
+      product = self.get(id=product_id)
+      user = User.objects.get(id=user_id)
+      product.users.remove(user)
+      product.save()
+    except:
+      print 'SOMETHING WENT TERRIBLY WRONG'
+
 class Product(models.Model):
   name = models.CharField(max_length=255)
   price = models.FloatField()

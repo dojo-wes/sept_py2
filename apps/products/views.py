@@ -41,3 +41,7 @@ def delete(req, user_id):
 def add_to_cart(req, product_id):
   Product.objects.add_to_cart(product_id, req.session['user_id'])
   return redirect('products:index')
+
+def remove_from_cart(req, product_id):
+  Product.objects.remove_from_cart(product_id, req.session['user_id'])
+  return redirect('products:index')
